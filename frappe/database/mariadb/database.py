@@ -163,6 +163,7 @@ class MariaDBDatabase(MariaDBConnectionUtil, MariaDBExceptionUtil, Database):
 			"Rating": ("decimal", "3,2"),
 			"Read Only": ("varchar", self.VARCHAR_LEN),
 			"Attach": ("text", ""),
+			"Attach External": ("text", ""),
 			"Attach Image": ("text", ""),
 			"Signature": ("longtext", ""),
 			"Color": ("varchar", self.VARCHAR_LEN),
