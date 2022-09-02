@@ -83,7 +83,7 @@ frappe.views.Page = class Page {
 			frappe.dom.set_style(this.pagedoc.style || "");
 
 			// set breadcrumbs
-			frappe.breadcrumbs.add(this.pagedoc.module || null);
+			// frappe.breadcrumbs.add(this.pagedoc.module || null);
 		}
 
 		this.trigger_page_event("on_page_load");

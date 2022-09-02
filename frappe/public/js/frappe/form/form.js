@@ -79,7 +79,7 @@ frappe.ui.form.Form = class FrappeForm {
 		this.$wrapper = $(this.wrapper);
 		frappe.ui.make_app_page({
 			parent: this.wrapper,
-			single_column: this.meta.hide_toolbar,
+			single_column: true,
 		});
 		this.page = this.wrapper.page;
 		this.layout_main = this.page.main.get(0);
@@ -557,7 +557,7 @@ frappe.ui.form.Form = class FrappeForm {
 				me.trigger_link_fields();
 			});
 
-			frappe.breadcrumbs.add(me.meta.module, me.doctype);
+			// frappe.breadcrumbs.add(me.meta.module, me.doctype);
 		});
 
 		// update seen
@@ -701,7 +701,7 @@ frappe.ui.form.Form = class FrappeForm {
 		}
 
 		this.dashboard.refresh();
-		frappe.breadcrumbs.update();
+		// frappe.breadcrumbs.update();
 
 		this.show_submit_message();
 		this.clear_custom_buttons();

@@ -29,7 +29,10 @@
   "quick_lists_tab",
   "quick_lists",
   "roles_tab",
-  "roles"
+  "roles",
+  "custom",
+  "sidebar_tab",
+  "sidebar_menu"
  ],
  "fields": [
   {
@@ -173,11 +176,28 @@
    "fieldtype": "Table",
    "label": "Quick Lists",
    "options": "Workspace Quick List"
+  },
+  {
+   "default": "0",
+   "fieldname": "custom",
+   "fieldtype": "Check",
+   "label": "Custom"
+  },
+  {
+   "fieldname": "sidebar_tab",
+   "fieldtype": "Tab Break",
+   "label": "Sidebar Menu"
+  },
+  {
+   "fieldname": "sidebar_menu",
+   "fieldtype": "Table",
+   "label": "Sidebar Menu",
+   "options": "Sidebar Menu"
   }
  ],
  "in_create": 1,
  "links": [],
- "modified": "2022-08-16 18:01:42.632238",
+ "modified": "2022-08-29 13:50:32.712060",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Workspace",

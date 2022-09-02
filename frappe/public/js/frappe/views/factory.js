@@ -7,6 +7,12 @@ frappe.provide("frappe.views");
 frappe.views.Factory = class Factory {
 	constructor(opts) {
 		$.extend(this, opts);
+		// check if refresh redirect to app/home page
+		$(document).bind("refresh", function () {
+			if (frappe.get_route()[0] === "app") {
+				frappe.set_route("app", frappe.get_route()[1]);
+			}
+		});
 	}
 
 	show() {
@@ -38,14 +44,16 @@ frappe.make_page = function (double_column, page_name) {
 	if (!page_name) {
 		page_name = frappe.get_route_str();
 	}
+	console.log("page_route", frappe.get_route());
 
 	const page = frappe.container.add_page(page_name);
 
 	frappe.ui.make_app_page({
 		parent: page,
-		single_column: !double_column,
+		single_column: page_name == "Workspaces" ? !double_column : true,
 	});
 
 	frappe.container.change_to(page_name);
 	return page;
+
 };

@@ -26,7 +26,7 @@ frappe.views.BaseList = class BaseList {
 			this.setup_fields,
 			// make view
 			this.setup_page,
-			this.setup_side_bar,
+			// this.setup_side_bar,
 			this.setup_main_section,
 			this.setup_view,
 			this.setup_view_menu,
@@ -176,7 +176,7 @@ frappe.views.BaseList = class BaseList {
 	setup_page_head() {
 		this.set_title();
 		this.set_menu_items();
-		this.set_breadcrumbs();
+		// this.set_breadcrumbs();
 	}
 
 	set_title() {

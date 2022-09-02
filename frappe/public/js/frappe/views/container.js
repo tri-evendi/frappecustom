@@ -11,6 +11,7 @@ frappe.views.Container = class Container {
 	constructor() {
 		this.container = $("#body").get(0);
 		this.page = null; // current page
+		console.log("this.page", this.page);
 		this.pagewidth = $(this.container).width();
 		this.pagemargin = 50;
 
@@ -24,22 +25,48 @@ frappe.views.Container = class Container {
 		});
 
 		$(document).bind("rename", function (event, dt, old_name, new_name) {
-			frappe.breadcrumbs.rename(dt, old_name, new_name);
+			// frappe.breadcrumbs.rename(dt, old_name, new_name);
+		});
+
+		// check if refresh redirect to app/home page
+		$(document).bind("refresh", function () {
+			if (frappe.get_route()[0] === "app") {
+				frappe.set_route("app", frappe.get_route()[1]);
+			}
 		});
 	}
 	add_page(label) {
-		var page = $('<div class="content page-container"></div>')
-			.attr("id", "page-" + label)
-			.attr("data-page-route", label)
-			.hide()
-			.appendTo(this.container)
-			.get(0);
+		console.log("add_page_label", label);
+		console.log("add_page_this.page", this.page);
+		let layout_main = $(".layout-main").get(0);
+		if (this.page == null) {
+			label = "Workspaces";
+		}
+		if (label == "Workspaces") {
+			var page = $('<div class="content page-container"></div>')
+				.attr("id", "page-" + label)
+				.attr("data-page-route", label)
+				.hide()
+				.appendTo(this.container)
+				.get(0);
+		}else {
+			var page = $('<div class="col layout-main-section-wrapper non-wrapper"></div>')
+				.attr("id", "page-" + label)
+				.attr("data-page-route", label)
+				.hide()
+				.appendTo(layout_main)
+				.get(0);
+		}
+
 		page.label = label;
 		frappe.pages[label] = page;
 
 		return page;
 	}
+
 	change_to(label) {
+		console.log("change_to_label", label);
+
 		cur_page = this;
 		if (label.tagName) {
 			// if sent the div, get the table
@@ -61,17 +88,42 @@ frappe.views.Container = class Container {
 			}
 		}
 
+		console.log("change_to_this.page", this.page);
+		console.log("change_to_page", page);
+		console.log("change_to_page.id", page.id);
+		// get id from element html from this.page
+		var page_id = this.page ? this.page.id : null;
+		console.log("change_to_page_id", page_id);
+
+
 		// hide current
 		if (this.page && this.page != page) {
-			$(this.page).hide();
-			$(this.page).trigger("hide");
+			let layout_main_wrapper = $(".layout-main-section-wrapper").get(0);
+			if(label != "Workspaces") {
+				$(layout_main_wrapper).hide();
+				$(layout_main_wrapper).trigger("hide");
+			}
+			if (this.page.id != "page-Workspaces" && this.page.id !== page.id) {
+				$(this.page).hide();
+				$(this.page).trigger("hide");
+			}
+			// $(this.page).hide();
+			// $(this.page).trigger("hide");
 		}
 
 		// show new
 		if (!this.page || this.page != page) {
 			this.page = page;
-			// $(this.page).fadeIn(300);
+			$(this.page).fadeIn(300);
 			$(this.page).show();
+			console.log("this.page.label", this.page.label);
+			let layout_main_wrapper = $(".layout-main-section-wrapper").get(0);
+			let non_wrapper = $(".non-wrapper");
+			if (this.page.label == "Workspaces") {
+				$(layout_main_wrapper).show();
+				$(layout_main_wrapper).trigger("show");
+				$(non_wrapper).hide();
+			}
 		}
 
 		$(document).trigger("page-change");
@@ -79,7 +131,11 @@ frappe.views.Container = class Container {
 		this.page._route = frappe.router.get_sub_path();
 		$(this.page).trigger("show");
 		!this.page.disable_scroll_to_top && frappe.utils.scroll_to(0);
-		frappe.breadcrumbs.update();
+		// frappe.breadcrumbs.update();
+
+		if (this.page.id == "page-Workspaces") {
+			localStorage.current_workspace = this.page;
+		}
 
 		return this.page;
 	}

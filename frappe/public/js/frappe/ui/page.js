@@ -53,9 +53,9 @@ frappe.ui.Page = class Page {
 				$(".page-head").toggleClass("drop-shadow", !!document.documentElement.scrollTop);
 				let current_scroll = document.documentElement.scrollTop;
 				if (current_scroll > 0 && last_scroll <= current_scroll) {
-					$(".page-head").css("top", "-15px");
+					$(".page-head").css("top", "-25px");
 				} else {
-					$(".page-head").css("top", "var(--navbar-height)");
+					$(".page-head").css("top", "-25px");
 				}
 				last_scroll = current_scroll;
 			}),
@@ -171,7 +171,7 @@ frappe.ui.Page = class Page {
 		let sidebar_toggle = $(".page-head").find(".sidebar-toggle-btn");
 		let sidebar_wrapper = this.wrapper.find(".layout-side-section");
 		if (this.disable_sidebar_toggle || !sidebar_wrapper.length) {
-			sidebar_toggle.remove();
+			// sidebar_toggle.remove();
 		} else {
 			sidebar_toggle.attr("title", __("Toggle Sidebar")).tooltip({
 				delay: { show: 600, hide: 100 },
